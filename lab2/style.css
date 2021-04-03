@@ -1,0 +1,64 @@
+h1 {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+div.task {
+    border-radius: 5px;
+}
+
+div.task:hover {
+    background-color: rgba(13,110,253,0.1);
+}
+
+div.taskIsDone {
+    background-color: rgba(173,181,189,0.2);
+    text-decoration: line-through;
+}
+
+div.taskIsDone:hover {
+    background-color: rgba(144,168,201,0.2);
+    text-decoration: line-through;
+}
+
+div.date {
+    font-size: small;
+    word-wrap: break-word;
+}
+
+div.searchLine {
+    border-bottom: 2px solid lightgrey;
+    margin-bottom: 3%;
+}
+
+div.restoreLine {
+    border-top: 2px solid lightgrey;
+    padding-top: 3%;
+    margin-top: 3%;
+}
+
+div.checkMargin{
+    margin-bottom: 5%;
+}
+
+.accordion-button:after {
+    background-image: url("data:image/svg+xml,\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'>\
+    <path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 \
+    6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.accordion-button {
+    background: #0d6efd !important;
+    color: white !important;
+}
+
+img.close {
+    position: relative;
+    left: -15px;
+}
+
+img.restore {
+    width: 50px;
+}
