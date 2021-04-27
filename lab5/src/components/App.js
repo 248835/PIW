@@ -1,10 +1,10 @@
 import React from "react";
-import {AppBar, Box, Grid, Tab, Tabs} from "@material-ui/core";
+import {Box, Grid} from "@material-ui/core";
 import {SearchStudent} from "./SearchStudent";
 import {AddUserForm} from "./AddUserForm";
 import {UserGrid} from "./UserGrid";
 import {hashCode} from "../utils/HashCode";
-import {Link, BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import {Link, BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {BottomNavigation, BottomNavigationAction} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -206,19 +206,20 @@ class App extends React.Component {
     return (
       <Router>
         <Route
-          path="/"
+          path="/osobyDoProjektu/"
           render={(history) => (
             <BottomNavigation value={history.location.pathname} style={{marginBottom: 10}}>
-              <BottomNavigationAction component={Link} to="/search" label="osoby" value="/search" icon={<PersonIcon/>}/>
-              <BottomNavigationAction component={Link} to="/dodaj" label="dodaj" value="/dodaj"
+              <BottomNavigationAction component={Link} to="/osobyDoProjektu/search" label="osoby" value="/osobyDoProjektu/search" icon={<PersonIcon/>}/>
+              <BottomNavigationAction component={Link} to="/osobyDoProjektu/dodaj" label="dodaj" value="/osobyDoProjektu/dodaj"
                                       icon={<PersonAddIcon/>}/>
-              <BottomNavigationAction component={Link} to="/edytuj" label="edytuj" value="/edytuj" icon={<EditIcon/>}/>
+              <BottomNavigationAction component={Link} to="/osobyDoProjektu/edytuj" label="edytuj" value="/osobyDoProjektu/edytuj" icon={<EditIcon/>}/>
             </BottomNavigation>
           )
           }/>
 
         <Switch>
-          <Route exact path='/search'>
+          <Route exact path="/osobyDoProjektu/"/>
+          <Route path='/osobyDoProjektu/search'>
             <SearchStudent
               tagsList={this.state.tagsList}
               setTagSearchList={this.setTagSearchList}
@@ -226,7 +227,7 @@ class App extends React.Component {
               searchNameInput={this.handleSearchNameInput}
             />
           </Route>
-          <Route path='/dodaj'>
+          <Route path='/osobyDoProjektu/dodaj'>
             <AddUserForm
               cancelButton={this.changeShowButtonState}
               zapiszButton={this.handleZapiszButton}
@@ -242,7 +243,7 @@ class App extends React.Component {
               imieNazwisko={this.state.imieNazwisko}
             />
           </Route>
-          <Route path='/edytuj'>
+          <Route path='/osobyDoProjektu/edytuj'>
             <EditUser
               codeInput={this.handleCodeInput}
               handleCodeButton={this.handleCodeButton}

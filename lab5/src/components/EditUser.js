@@ -7,7 +7,6 @@ import {
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Autocomplete, Skeleton} from "@material-ui/lab";
-import {hashCode} from "../utils/HashCode";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -71,9 +70,9 @@ export const EditUser = (props) => {
 
   const [open, setOpen] = React.useState(true);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
