@@ -1,15 +1,16 @@
 import React from "react";
-import {Box, Grid} from "@material-ui/core";
+import {AppBar, Box, Grid, Tab, Tabs} from "@material-ui/core";
 import {SearchStudent} from "./SearchStudent";
 import {AddUserForm} from "./AddUserForm";
 import {UserGrid} from "./UserGrid";
 import {hashCode} from "../utils/HashCode";
-import {Link, BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {Link, BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import {BottomNavigation, BottomNavigationAction} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import EditIcon from '@material-ui/icons/Edit';
 import {EditUser} from "./EditUser";
+import {Alert} from "@material-ui/lab";
 
 
 class App extends React.Component {
@@ -49,7 +50,8 @@ class App extends React.Component {
     ],
     tagsList: ["AWS", "Docker", "React"],
     chipList: [],
-    editStudent: null
+    editStudent: null,
+    redirect: false
   }
   handleChange = (event, newValue) => {
     this.setState({navigateTo: newValue})
@@ -152,8 +154,14 @@ class App extends React.Component {
     item.chipList = this.state.chipList
     items[index] = item
 
-    this.setState({studentList: items,
-    editStudent: null})
+    this.setState({
+      studentList: items,
+      editStudent: null
+    })
+  }
+
+  handleRedirect = () => {
+    this.setState({redirect: !this.state.redirect})
   }
 
   handleZapiszButton = () => {
@@ -197,75 +205,76 @@ class App extends React.Component {
       ))
     return (
       <Router>
-        <BottomNavigation value={this.state.navigateTo} onChange={this.handleChange} style={{marginBottom: 10}}>
-          <BottomNavigationAction component={Link} to="/" label="osoby" value="osoby" icon={<PersonIcon/>}/>
-          <BottomNavigationAction component={Link} to="/dodaj" label="dodaj" value="dodaj" icon={<PersonAddIcon/>}/>
-          <BottomNavigationAction component={Link} to="/edytuj" label="edytuj" value="edytuj" icon={<EditIcon/>}/>
-        </BottomNavigation>
+        <Route
+          path="/"
+          render={(history) => (
+            <BottomNavigation value={history.location.pathname} style={{marginBottom: 10}}>
+              <BottomNavigationAction component={Link} to="/search" label="osoby" value="/search" icon={<PersonIcon/>}/>
+              <BottomNavigationAction component={Link} to="/dodaj" label="dodaj" value="/dodaj"
+                                      icon={<PersonAddIcon/>}/>
+              <BottomNavigationAction component={Link} to="/edytuj" label="edytuj" value="/edytuj" icon={<EditIcon/>}/>
+            </BottomNavigation>
+          )
+          }/>
 
-          <Switch>
-            <Route exact path='/'>
-              <SearchStudent
-                tagsList={this.state.tagsList}
-                setTagSearchList={this.setTagSearchList}
-                onClick={this.handleIsSearching}
-                searchNameInput={this.handleSearchNameInput}
-              />
-              <Box m={1}/>
-              <Grid
-                container
-                direction="column-reverse"
-                justify="flex-start"
-                alignItems="center"
-                spacing={2}
-              >
-                {listToRender}
-              </Grid>
-            </Route>
-            <Route path='/dodaj'>
-              <AddUserForm
-                cancelButton={this.changeShowButtonState}
-                zapiszButton={this.handleZapiszButton}
-                imieNazwiskoInput={this.handleImieNazwiskoInput}
-                emailInput={this.handleEmailInput}
-                opisInput={this.handleOpisInput}
-                imieError={this.state.imieError}
-                emailError={this.state.emailError}
-                tagsList={this.state.tagsList}
-                setChipList={this.setChipList}
-                handleClose={this.handleClose}
-                open={this.state.open}
-                imieNazwisko={this.state.imieNazwisko}
-              />
-              <Box m={1}/>
-              <Grid
-                container
-                direction="column-reverse"
-                justify="flex-start"
-                alignItems="center"
-                spacing={2}
-              >
-                {listToRender}
-              </Grid>
-            </Route>
-            <Route path='/edytuj'>
-              <EditUser
-                codeInput={this.handleCodeInput}
-                handleCodeButton={this.handleCodeButton}
-                student={this.state.editStudent}
-                errorCode={this.state.codeError}
-                zapiszButton={this.handleEditStudent}
-                emailInput={this.handleEmailInput}
-                opisInput={this.handleOpisInput}
-                emailError={this.state.emailError}
-                tagsList={this.state.tagsList}
-                setChipList={this.setChipList}
-                usunStudent={this.handleUsunStudent}
-                imieNazwisko={this.state.imieNazwisko}
-                handleClose={this.handleClose}
-              />
-            </Route>
-          </Switch>
+        <Switch>
+          <Route exact path='/search'>
+            <SearchStudent
+              tagsList={this.state.tagsList}
+              setTagSearchList={this.setTagSearchList}
+              onClick={this.handleIsSearching}
+              searchNameInput={this.handleSearchNameInput}
+            />
+          </Route>
+          <Route path='/dodaj'>
+            <AddUserForm
+              cancelButton={this.changeShowButtonState}
+              zapiszButton={this.handleZapiszButton}
+              imieNazwiskoInput={this.handleImieNazwiskoInput}
+              emailInput={this.handleEmailInput}
+              opisInput={this.handleOpisInput}
+              imieError={this.state.imieError}
+              emailError={this.state.emailError}
+              tagsList={this.state.tagsList}
+              setChipList={this.setChipList}
+              handleClose={this.handleClose}
+              open={this.state.open}
+              imieNazwisko={this.state.imieNazwisko}
+            />
+          </Route>
+          <Route path='/edytuj'>
+            <EditUser
+              codeInput={this.handleCodeInput}
+              handleCodeButton={this.handleCodeButton}
+              student={this.state.editStudent}
+              errorCode={this.state.codeError}
+              zapiszButton={this.handleEditStudent}
+              emailInput={this.handleEmailInput}
+              opisInput={this.handleOpisInput}
+              emailError={this.state.emailError}
+              tagsList={this.state.tagsList}
+              setChipList={this.setChipList}
+              usunStudent={this.handleUsunStudent}
+              imieNazwisko={this.state.imieNazwisko}
+              handleClose={this.handleClose}
+            />
+          </Route>
+          <Route>
+            <Alert severity="warning" style={{maxWidth: 500, marginLeft: "auto", marginRight: "auto"}}>
+              Dana strona nie istnieje!
+            </Alert>
+          </Route>
+        </Switch>
+        <Box m={1}/>
+        <Grid
+          container
+          direction="column-reverse"
+          justify="flex-start"
+          alignItems="center"
+          spacing={2}
+        >
+          {listToRender}
+        </Grid>
       </Router>
     )
   }
