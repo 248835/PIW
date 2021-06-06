@@ -11,7 +11,6 @@ import {
   Theme,
   Typography,
 } from '@material-ui/core';
-import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
