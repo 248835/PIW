@@ -8,9 +8,9 @@ import { useHistory } from 'react-router-dom';
 
 const OrderedPage = () => {
   const [pizza, setPizza] = React.useState<firebase.firestore.DocumentData>();
+  const history = useHistory();
 
   useEffect(() => {
-    const history = useHistory();
     const path = window.location.pathname.split('/');
     const id = path[path.length - 2];
     getPizza(id).then(it => {

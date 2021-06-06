@@ -9,9 +9,9 @@ import { Link, useHistory } from 'react-router-dom';
 const PizzaPage = () => {
   const [pizza, setPizza] = React.useState<firebase.firestore.DocumentData>();
   const path = window.location.pathname.split('/');
+  const history = useHistory();
 
   useEffect(() => {
-    const history = useHistory();
     getPizza(path[path.length - 1]).then(it => {
       setPizza(it.data());
       if (it.data() === undefined) {
